@@ -8,10 +8,14 @@ var downloader = require('./utils/downloader.js'),
     parseDaysTypes = require('./parsers/days-types.js'),
     parseCalendar = require('./parsers/course-calendar.js'),
     parseLinesPerDay = require('./parsers/available-lines-per-day'),
-    parseBusStopsGroups = require('./parsers/bus-stops-groups.js');
+    parseBusStopsGroups = require('./parsers/bus-stops-groups.js'),
+    parseBusStops = require('./parsers/bus-stops.js'),
+    parseCities = require('./parsers/cities.js'),
+
+    busStops = {};
 
 downloader.download().then(function (dbPath) {
-    reader.readDatabaseFile(dbPath, function (moduleName, moduleContent) {
+    return reader.readDatabaseFile(dbPath, function (moduleName, moduleContent) {
         if (moduleName === 'TY') {
             console.log(JSON.stringify(parseDaysTypes(moduleContent)));
         }
@@ -23,6 +27,12 @@ downloader.download().then(function (dbPath) {
         }
         if (moduleName === 'ZA') {
             console.log(JSON.stringify(parseBusStopsGroups(moduleContent)));
+        }
+        if (moduleName === 'PR') {
+            parseBusStops(moduleContent, busStops);
+        }
+        if(moduleName === 'SM') {
+            console.log(JSON.stringify(parseCities(moduleContent)));
         }
     }).catch(function (e) {
         console.error(e);

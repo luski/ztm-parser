@@ -8,7 +8,7 @@ var readLines = require('./lines-reader.js').readLines,
 
 function readDatabaseFile(filePath, handler) {
     moduleHandler = handler;
-    readLines(filePath, readLine);
+    return readLines(filePath, readLine);
 }
 
 function readLine(line) {

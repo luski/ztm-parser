@@ -9,16 +9,16 @@ function parse(content) {
 }
 
 function parseBusStopGroup(line) {
+    var items = splitter.byLengths(line, [7, 35, 4]);
     return {
-        id: parseInt(line.substring(0, 7)),
-        name: parseName(line.substring(7, 43)),
-        cityCode: line.substring(43, 47).trim(),
-        cityName: line.substring(47).trim()
+        id: parseInt(items[0]),
+        name: parseName(items[1]),
+        cityCode: items[2],
+        cityName: items[3]
     };
 }
 
 function parseName(text) {
-    text = text.trim();
     if (text[text.length - 1] === ',') {
         text = text.substring(0, text.length - 1);
     }
