@@ -39,6 +39,9 @@ downloader.download().then(function (dbPath) {
         if (moduleName === 'LW') {
             routesAndSchedulesParser.parseRoute(moduleContent);
         }
+        if (moduleName === 'OP') {
+            routesAndSchedulesParser.parseLegend(moduleContent);
+        }
     }).catch(function (e) {
         console.error(e);
     });
