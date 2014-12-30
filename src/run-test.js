@@ -11,8 +11,10 @@ var downloader = require('./utils/downloader.js'),
     parseBusStopsGroups = require('./parsers/bus-stops-groups.js'),
     parseBusStops = require('./parsers/bus-stops.js'),
     parseCities = require('./parsers/cities.js'),
+    RoutesAndSchedulesParser = require('./parsers/routes-and-schedules.js'),
 
-    busStops = {};
+    busStops = {},
+    routesAndSchedulesParser = new RoutesAndSchedulesParser();
 
 downloader.download().then(function (dbPath) {
     return reader.readDatabaseFile(dbPath, function (moduleName, moduleContent) {
@@ -31,8 +33,11 @@ downloader.download().then(function (dbPath) {
         if (moduleName === 'PR') {
             parseBusStops(moduleContent, busStops);
         }
-        if(moduleName === 'SM') {
+        if (moduleName === 'SM') {
             console.log(JSON.stringify(parseCities(moduleContent)));
+        }
+        if (moduleName === 'LW') {
+            routesAndSchedulesParser.parseRoute(moduleContent);
         }
     }).catch(function (e) {
         console.error(e);

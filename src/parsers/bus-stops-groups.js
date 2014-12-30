@@ -9,7 +9,7 @@ function parse(content) {
 }
 
 function parseBusStopGroup(line) {
-    var items = splitter.byLengths(line, [7, 35, 4]);
+    var items = splitter.byLengths(line.trim(), [7, 35, 4]);
     return {
         id: parseInt(items[0]),
         name: parseName(items[1]),

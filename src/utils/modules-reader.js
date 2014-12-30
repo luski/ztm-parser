@@ -12,10 +12,10 @@ function readDatabaseFile(filePath, handler) {
 }
 
 function readLine(line) {
-    line = line.trim();
-    if (line.indexOf('*') === 0) {
-        openModule(line);
-    } else if (line.indexOf('#') === 0) {
+    var trimmedLine = line.trim();
+    if (trimmedLine.indexOf('*') === 0) {
+        openModule(trimmedLine);
+    } else if (trimmedLine.indexOf('#') === 0) {
         closeModule(moduleHandler);
     } else {
         modulesStack[modulesStack.length - 1].content += (line + '\n');

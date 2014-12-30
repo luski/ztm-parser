@@ -32,7 +32,7 @@ function parseBusStop(inputLines, result) {
     busStopHeader.lines = {};
 
     for (i = 0; i < typesCount; i++) {
-        parseBuses(inputLines.shift(), busStopHeader.lines);
+        parseBuses(inputLines.shift().trim(), busStopHeader.lines);
     }
 
     if (!result[busStopGroupId]) {
@@ -49,7 +49,7 @@ function parseBuses(input, busLines) {
 }
 
 function parseHeader(lines) {
-    var header = splitter.byLengths(lines.shift(), [6, 10, 43, 40, 17]);
+    var header = splitter.byLengths(lines.shift().trim(), [6, 10, 43, 40, 17]);
     return {
         busStopGroupId: parseInt(header[0].substring(0, 4)),
         busStopId: parseInt(header[0].substring(4, 6)),
