@@ -11,11 +11,12 @@ var downloader = require('./utils/downloader.js'),
     parseBusStopsGroups = require('./parsers/bus-stops-groups.js'),
     parseBusStops = require('./parsers/bus-stops.js'),
     parseCities = require('./parsers/cities.js'),
-    RoutesAndSchedulesParser = require('./parsers/routes-and-schedules.js'),
+    createRoutesAndSchedulesParser = require('./parsers/routes-and-schedules.js'),
 
     busStops = {},
-    routesAndSchedulesParser = new RoutesAndSchedulesParser();
+    routesAndSchedulesParser = createRoutesAndSchedulesParser();
 
+var test = true;
 downloader.download().then(function (dbPath) {
     return reader.readDatabaseFile(dbPath, function (moduleName, moduleContent) {
         if (moduleName === 'TY') {
@@ -41,6 +42,10 @@ downloader.download().then(function (dbPath) {
         }
         if (moduleName === 'OP') {
             routesAndSchedulesParser.parseLegend(moduleContent);
+        }
+        if (moduleName === 'WG' && test) {
+            routesAndSchedulesParser.parseSchedule(moduleContent);
+            test = false;
         }
     }).catch(function (e) {
         console.error(e);

@@ -19,11 +19,11 @@ function readLines(filePath, onLineRead) {
 
             if (index !== -1) {
                 lines = lastLine + allBuffer.substring(0, index + 1);
-                lines.split('\r\n').filter(isNotEmptyLine).forEach(onLineRead);
+                lines.split('\r\n').filter(isNotEmptyLine).map(clearText).forEach(onLineRead);
                 lastLine = allBuffer.substring(index + 1);
             } else {
                 lines = lastLine + allBuffer;
-                lines.split('\r\n').filter(isNotEmptyLine).forEach(onLineRead);
+                lines.split('\r\n').filter(isNotEmptyLine).map(clearText).forEach(onLineRead);
                 lastLine = '';
             }
         });
@@ -34,6 +34,10 @@ function readLines(filePath, onLineRead) {
 
 function isNotEmptyLine(line) {
     return !!line.length;
+}
+
+function clearText(text) {
+    return text.replace(/\r/g, '');
 }
 
 module.exports = {readLines: readLines};
