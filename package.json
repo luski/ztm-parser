@@ -1,0 +1,32 @@
+{
+  "name": "ztm-parser.js",
+  "version": "1.0.0",
+  "description": "ztm-parser.js =============",
+  "main": "parser.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "ftp": "^0.3.8",
+    "iconv": "^2.1.4",
+    "mockery": "^1.4.0",
+    "node-7z": "^0.2.0",
+    "promise": "^6.0.1",
+    "should": "^4.4.1",
+    "underscore": "^1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm mocha test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luski/ztm-parser.js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luski/ztm-parser.js/issues"
+  },
+  "homepage": "https://github.com/luski/ztm-parser.js"
+}
