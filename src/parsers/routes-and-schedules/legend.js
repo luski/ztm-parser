@@ -2,34 +2,31 @@
 
 'use strict';
 
-var splitter = require('../../utils/splitter.js');
+var str = require('../../utils/string.js');
 
 /**
- * @returns {{parse: function, allBeginDateTexts: string[], allCommentTexts: string[], allLegendTexts: string[],
- * legends: object[]}}
+ * @returns {{parse: function, allBeginDateTexts: string[], allCommentTexts: string[], allLegendTexts: string[]}}
  */
 function createLegendParser() {
     var allBeginDateTexts = [],
         allCommentTexts = [],
-        allLegendTexts = [],
-        legends = [];
+        allLegendTexts = [];
 
     function parse(input) {
-        legends.push(parseLegend(input));
+        return parseLegend(input);
     }
 
     return {
         parse: parse,
         allBeginDateTexts: allBeginDateTexts,
         allCommentTexts: allCommentTexts,
-        allLegendTexts: allLegendTexts,
-        legends: legends
+        allLegendTexts: allLegendTexts
     };
 
     /////////////// IMPLEMENTATION
 
     function parseLegend(input) {
-        var inputLines = unwrap(splitter.byNL(input)).map(function (text) {
+        var inputLines = unwrap(str.splitByNL(input)).map(function (text) {
                 return text.trim();
             }),
             beginDateText = filterLegend([inputLines.shift()], 'D')[0],
@@ -37,9 +34,9 @@ function createLegendParser() {
             legendTexts = filterLegend(inputLines, 'S');
 
         return {
-            beginDateText: addText(allBeginDateTexts, beginDateText),
-            commentTexts: addTexts(allCommentTexts, commentTexts),
-            legend: addTexts(allLegendTexts, legendTexts)
+            b: addText(allBeginDateTexts, beginDateText), // beginDateText
+            c: addTexts(allCommentTexts, commentTexts), // commentTexts
+            l: addTexts(allLegendTexts, legendTexts) // legend
         };
     }
 
@@ -65,7 +62,7 @@ function createLegendParser() {
     }
 
     function formatPartialLegendLine(inputLine) {
-        return ' ' + splitter.bySpace(inputLine).splice(1).join(' ').trim();
+        return ' ' + str.splitBySpace(inputLine).splice(1).join(' ').trim();
     }
 
     function filterLegend(input, prefix) {

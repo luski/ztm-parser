@@ -2,11 +2,11 @@
 
 'use strict';
 
-var splitter = require('../utils/splitter.js');
+var str = require('../utils/string.js');
 
 function parse(content) {
     var result = [],
-        lines = splitter.byNL(content);
+        lines = str.splitByNL(content);
 
     while (lines.length) {
         result.push(parseDay(lines));
@@ -16,14 +16,14 @@ function parse(content) {
 }
 
 function parseDay(lines) {
-    var header = splitter.bySpace(lines.shift()),
+    var header = str.splitBySpace(lines.shift()),
         count = parseInt(header[1]),
         transportLines = [],
         i,
         item;
 
     for (i = 0; i < count; i++) {
-        item = splitter.bySpace(lines.shift());
+        item = str.splitBySpace(lines.shift());
         transportLines.push({
             line: item[0],
             dayType: item[1]

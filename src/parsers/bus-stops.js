@@ -2,7 +2,7 @@
 
 'use strict';
 
-var splitter = require('../utils/splitter.js'),
+var str = require('../utils/string.js'),
 
     typesMap = {
         'stały': 'permanent',
@@ -14,7 +14,7 @@ var splitter = require('../utils/splitter.js'),
     };
 
 function parse(content, result) {
-    var inputLines = splitter.byNL(content);
+    var inputLines = str.splitByNL(content);
     while (inputLines.length) {
         parseBusStop(inputLines, result);
     }
@@ -42,14 +42,14 @@ function parseBusStop(inputLines, result) {
 }
 
 function parseBuses(input, busLines) {
-    var fields = splitter.byLengths(input, [8, 20]),
+    var fields = str.splitByLengths(input, [8, 20]),
         type = parseType(fields[1]);
 
-    busLines[typesMap[type]] = splitter.bySpace(fields[2]);
+    busLines[typesMap[type]] = str.splitBySpace(fields[2]);
 }
 
 function parseHeader(lines) {
-    var header = splitter.byLengths(lines.shift().trim(), [6, 10, 43, 40, 17]);
+    var header = str.splitByLengths(lines.shift().trim(), [6, 10, 43, 40, 17]);
     return {
         busStopGroupId: parseInt(header[0].substring(0, 4)),
         busStopId: parseInt(header[0].substring(4, 6)),
@@ -62,18 +62,11 @@ function parseHeader(lines) {
 }
 
 function parseName(text) {
-    return cutLastIfEquals(text, ',');
+    return str.removeDelimiterAtEnd(text, ',');
 }
 
 function parseType(text) {
-    return cutLastIfEquals(text, ':');
-}
-
-function cutLastIfEquals(text, character) {
-    if (text.charAt(text.length - 1) === character) {
-        return text.substring(0, text.length - 1);
-    }
-    return text;
+    return str.removeDelimiterAtEnd(text, ':');
 }
 
 module.exports = parse;

@@ -2,44 +2,24 @@
 
 'use strict';
 
-var splitter = require('../../utils/splitter.js');
-
-/**
- * @returns {{parse: function, schedules: object[]}}
- */
-function createScheduleParser() {
-    var schedules = [];
-
-    function parse(content) {
-        schedules.push(parseSchedule(content));
-    }
-
-    return {
-        parse: parse,
-        schedules: schedules
-    };
-}
-
-module.exports = createScheduleParser;
-
-////////// IMPLEMENTATION
+var str = require('../../utils/string.js');
 
 function parseSchedule(content) {
-    return splitter.byNL(content).map(parseHourSchedule);
+    return str.splitByNL(content).map(parseHourSchedule);
 }
 
 function parseHourSchedule(input) {
-    var fields = splitter.bySpace(input);
+    var fields = str.splitBySpace(input);
 
     return {
-        hour: parseInt(fields[2]),
-        schedule: fields.slice(3).map(parseMinute)
+        h: parseInt(fields[2]), //hour
+        s: fields.slice(3).map(parseMinute) //schedule
     };
 }
 
 function parseMinute(text) {
     var isLowFloor = text.charAt(0) === '[',
-        minute;
+        minute, symbols;
 
     text = text.substring(1);
     minute = parseInt(text);
@@ -48,12 +28,13 @@ function parseMinute(text) {
         text = text.substring(1);
     }
 
+    symbols = text.split('').filter(function (symbol) {
+        return !!symbol.length && symbol !== ']' && symbol !== '^';
+    });
     return {
-        isLowFloor: isLowFloor,
-        minute: minute,
-        symbols: text.split('').filter(function (symbol) {
-            return !!symbol.length && symbol !== ']' && symbol !== '^';
-        })
+        lf: isLowFloor ? 1 : undefined,
+        m: minute,
+        s: symbols.length ? symbols : undefined
     };
 }
 
@@ -61,3 +42,4 @@ function isNumber(char) {
     return char >= '0' && char <= '9';
 }
 
+module.exports = parseSchedule;

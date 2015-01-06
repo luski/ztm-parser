@@ -1,10 +1,10 @@
-/*global require, describe, before, after, it*/
+/*global require, __dirname, describe, before, after, it*/
 
 'use strict';
 
 var should = require('should'),
     testParser = require('./util/test-parser.js'),
-    
+
     parsers = [{
         parseFn: require('../src/parsers/days-types.js'),
         resourceFileName: 'days-types-content',
@@ -20,12 +20,12 @@ describe('Parsers Tests', function () {
 });
 
 function makeUnitTest(object) {
-     it(object.description, function(done) {
-        
-        testParser(object.parseFn, 
-            __dirname +'/resource/' + object.resourceFileName + '.input', 
-            __dirname +'/resource/' + object.resourceFileName + '.output')
-            .then(function(objects) {
+    it(object.description, function (done) {
+
+        testParser(object.parseFn,
+            __dirname + '/resource/' + object.resourceFileName + '.input',
+            __dirname + '/resource/' + object.resourceFileName + '.output')
+            .then(function (objects) {
                 objects.parsedObject.should.be.eql(objects.expectedObject);
             })
             .then(done, done);

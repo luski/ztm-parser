@@ -12,7 +12,7 @@ module.exports = {
      * @param {string} line
      * @returns {string[]}
      */
-    bySpace: function (line) {
+    splitBySpace: function (line) {
         return line.split(' ').filter(notEmpty);
     },
 
@@ -21,7 +21,7 @@ module.exports = {
      * @param {string} content
      * @returns {string[]}
      */
-    byNL: function (content) {
+    splitByNL: function (content) {
         return content.split('\n').filter(notEmpty);
     },
 
@@ -31,7 +31,7 @@ module.exports = {
      * @param {int[]} lengths
      * @returns {string[]}
      */
-    byLengths: function (line, lengths) {
+    splitByLengths: function (line, lengths) {
         var i, result = [], start = 0, stop, length;
 
         for (i = 0; i < lengths.length; i++) {
@@ -43,5 +43,17 @@ module.exports = {
         result.push(line.substring(start).trim());
 
         return result;
+    },
+
+    /**
+     * If specified string ends with given delimiter, string without this delimiter is returned.
+     * @param {string} string
+     * @param {string} delimiter
+     */
+    removeDelimiterAtEnd: function (string, delimiter) {
+        if (string.charAt(string.length - 1) === delimiter) {
+            return string.substring(0, string.length - 1);
+        }
+        return string;
     }
 };
