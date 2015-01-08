@@ -82,10 +82,10 @@ function createSchedulesParser() {
     function parseTransportLines(input) {
         str.splitByNL(input).forEach(parseTransportLine);
 
-        //result.streets = routesParser.streets;
-        //result.texts.beginDateTexts = legendParser.allBeginDateTexts;
-        //result.texts.commentTexts = legendParser.allCommentTexts;
-        //result.texts.legendTexts = legendParser.allLegendTexts;
+        result.streets = routesParser.streets;
+        result.texts.beginDateTexts = legendParser.allBeginDateTexts;
+        result.texts.commentTexts = legendParser.allCommentTexts;
+        result.texts.legendTexts = legendParser.allLegendTexts;
     }
 
     function parseTransportLine(input) {

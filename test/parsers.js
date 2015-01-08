@@ -13,6 +13,10 @@ var should = require('should'),
         parseFn: require('../src/parsers/available-lines-per-day.js'),
         resourceFileName: 'line-per-day-content',
         description: 'parse all available lines per day'
+    }, {
+        parseFn: require('../src/parsers/course-calendar.js'),
+        resourceFileName: 'calendar',
+        description: 'parse day types calendar'
     }];
 
 describe('Parsers Tests', function () {

@@ -9,10 +9,13 @@ function parse(content) {
 }
 
 function parseItem(line) {
-    var data = str.splitBySpace(line);
+    var data = str.splitBySpace(line),
+        date = data.shift();
+        
+    data.shift();
     return {
-        date: data[0],
-        types: data[1]
+        date: date,
+        types: data
     };
 }
 
