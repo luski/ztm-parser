@@ -13,11 +13,8 @@ var Promise = require('promise'),
     archivePath = null,
     dstPath = null;
 
-
-function execute(host) {
-    return require('./address.js')
-        .getDatabaseAddress(host)
-        .then(download)
+function execute(url) {
+    return download(url)
         .then(extract)
         .then(deleteArchive)
         .then(function () {
@@ -83,4 +80,4 @@ function deleteArchive() {
     });
 }
 
-module.exports = {download: execute};
+module.exports = {download: execute, getDataSourcesURLs: require('./utils/address.js')};

@@ -1,5 +1,4 @@
 /*global require, describe, before, after, it*/
-
 'use strict';
 
 var mockery = require('mockery'),
@@ -9,7 +8,9 @@ var mockery = require('mockery'),
 describe('downloadTests', function () {
     before(function () {
         mockery.enable();
-        mockery.enable({useCleanCache: true});
+        mockery.enable({
+            useCleanCache: true
+        });
         mockery.warnOnUnregistered(false);
         mockery.warnOnReplace(false);
         mockery.registerSubstitute('ftp', '../test/mock/ftp.js');
@@ -22,9 +23,9 @@ describe('downloadTests', function () {
     });
 
     it('should return proper ftp address', function (done) {
-        Download.getDatabaseAddress()
-            .then(function (address) {
-                address.should.be.exactly('ftp://rozklady.ztm.waw.pl/RA123456.7z');
+        Download.getDatabaseAddresses()
+            .then(function (addresses) {
+                addresses[0].should.be.exactly('ftp://rozklady.ztm.waw.pl/RA123456.7z');
                 done();
             })
             .catch(done);

@@ -3,15 +3,14 @@
 'use strict';
 
 var FtpClient = require('ftp'),
-    Promise = require('promise'),
-    _ = require('underscore');
+    Promise = require('promise');
 
 /**
  * Finds newest file in specified ftp address and returns full address of this file.
  * @param [host] Source host. If not defined 'rozklady.ztm.waw.pl' is taken.
  * @returns {Promise}
  */
-function getDatabaseAddress(host) {
+function getDatabaseAddresses(host) {
     host = host || 'rozklady.ztm.waw.pl';
     return new Promise(function (resolve, reject) {
         var client = new FtpClient();
@@ -21,9 +20,9 @@ function getDatabaseAddress(host) {
                 if (error) {
                     reject(error);
                 }
-                resolve('ftp://' + host + '/' + _.max(list, function (element) {
-                    return element.date;
-                }).name);
+                resolve(list.map(function (element) {
+                    return 'ftp://' + host + '/' + element.name;
+                }));
             });
         });
         client.on('error', reject);
@@ -32,5 +31,5 @@ function getDatabaseAddress(host) {
 }
 
 module.exports = {
-    getDatabaseAddress: getDatabaseAddress
+    getDatabaseAddresses: getDatabaseAddresses
 };
