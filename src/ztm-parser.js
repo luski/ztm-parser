@@ -53,6 +53,13 @@ function parseZTMDataSource(url, handlers) {
             }
             if (moduleName === 'LL') {
                 schedulesParser.parseTransportLines(moduleContent);
+                
+                if (typeof handlers.onGetBusStops === 'function') {
+                    handlers.onGetBusStops(busStops);
+                }
+                if (typeof handlers.onGetSchedules === 'function') {
+                    handlers.onGetSchedules(schedulesParser.result);
+                }
             }
             if (moduleName === 'TR') {
                 schedulesParser.parseRoutesDescriptors(moduleContent);
@@ -68,13 +75,6 @@ function parseZTMDataSource(url, handlers) {
             }
             if (moduleName === 'OP') {
                 schedulesParser.parseLegend(moduleContent);
-            }
-        }).then(function () {
-            if (handlers.onGetBusStops === 'function') {
-                handlers.onGetBusStops(busStops);
-            }
-            if (handlers.onGetSchedules === 'function') {
-                handlers.onGetSchedules(schedulesParser.result);
             }
         });
     });

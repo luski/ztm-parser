@@ -12,8 +12,8 @@ function parseHourSchedule(input) {
     var fields = str.splitBySpace(input);
 
     return {
-        h: parseInt(fields[2]), //hour
-        s: fields.slice(3).map(parseMinute) //schedule
+        hour: parseInt(fields[2]),
+        schedule: fields.slice(3).map(parseMinute)
     };
 }
 
@@ -32,9 +32,9 @@ function parseMinute(text) {
         return !!symbol.length && symbol !== ']' && symbol !== '^';
     });
     return {
-        lf: isLowFloor ? 1 : undefined,
-        m: minute,
-        s: symbols.length ? symbols : undefined
+        lowFloor: isLowFloor ? 1 : undefined,
+        minute: minute,
+        symbols: symbols.length ? symbols : undefined
     };
 }
 

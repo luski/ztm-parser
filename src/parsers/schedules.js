@@ -114,7 +114,7 @@ function createSchedulesParser() {
 
     function buildBusStopScheduleByDays(busStop) {
         if (busStop.isSchedule) {
-            busStop.days = dayTypes.shift().map(buildBusStopSchedule); // schedulesByDays
+            busStop.schedulesByDays = dayTypes.shift().map(buildBusStopSchedule);
             busStop.legend = legends.shift();
             delete busStop.isSchedule;
         }
