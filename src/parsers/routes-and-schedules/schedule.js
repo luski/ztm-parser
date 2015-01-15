@@ -21,7 +21,7 @@ function parseMinute(text) {
     var isLowFloor = text.charAt(0) === '[',
         minute, symbols;
 
-    text = text.substring(1);
+    text = text.substring(isLowFloor ? 1 : 0);
     minute = parseInt(text);
 
     while (isNumber(text.charAt(0))) {

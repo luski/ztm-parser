@@ -34,9 +34,9 @@ function createLegendParser() {
             legendTexts = filterLegend(inputLines, 'S');
 
         return {
-            b: addText(allBeginDateTexts, beginDateText), // beginDateText
-            c: addTexts(allCommentTexts, commentTexts), // commentTexts
-            l: addTexts(allLegendTexts, legendTexts) // legend
+            header: addText(allBeginDateTexts, beginDateText),
+            comments: addTexts(allCommentTexts, commentTexts),
+            legend: addTexts(allLegendTexts, legendTexts)
         };
     }
 
@@ -83,9 +83,10 @@ function createLegendParser() {
     }
 
     function addTexts(dst, texts) {
-        return texts.map(function (text) {
+        var result = texts.map(function (text) {
             return addText(dst, text);
         });
+        return result.length ? result : undefined;
     }
 }
 
