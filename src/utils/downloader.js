@@ -80,4 +80,4 @@ function deleteArchive() {
     });
 }
 
-module.exports = {download: execute, getDataSourcesURLs: require('./utils/address.js')};
+module.exports = {download: execute, getDataSourcesURLs: require('./utils/address.js').getDatabaseAddresses};

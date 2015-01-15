@@ -31,7 +31,7 @@ function parseZTMDataSource(url, handlers) {
     var schedulesParser = createSchedulesParser(),
         busStops = {};
 
-    downloader.download(url).then(function (dbPath) {
+    return downloader.download(url).then(function (dbPath) {
         return reader.readDatabaseFile(dbPath, function (moduleName, moduleContent) {
             if (moduleName === 'TY' && typeof handlers.onGetDayTypes === 'function') {
                 handlers.onGetDayTypes(parseDaysTypes(moduleContent));
