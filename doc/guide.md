@@ -30,9 +30,10 @@ The function returns a `Promise` object that resolves an array of URLs strings. 
 specified by the next data source file.
 
 <pre>
-For example if there are two following data source files in repository: RA010101.7z and RA.010106.7z 
-then the first file is valid between 2001/01/01 and 2001/01/06 and the second one is valid from 2001/01/06 
-till now.
+For example if there are two following data source files in repository: 
+RA010101.7z and RA.010106.7z 
+then the first file is valid between 2001/01/01 and 2001/01/06 and the second one 
+is valid from 2001/01/06 till now.
 </pre>
 
 * The extension is 7z because the data source is a big file (about 200MB) and has to be compressed.
