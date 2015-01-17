@@ -2,7 +2,7 @@
   "name": "ztm-parser.js",
   "version": "1.0.0",
   "description": "ztm-parser.js =============",
-  "main": "parser.js",
+  "main": "src/ztm-parser.js",
   "directories": {
     "test": "test"
   },
