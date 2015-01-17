@@ -47,7 +47,7 @@ In order to retrieve all information from Data Source file use the function `par
 ZTMDataSourceParser.parseZTMDataSource(handler);
 ```
 
-The function gets as an argument the object that contains all callback handlers:
+The function gets as an argument the object that contains following callback handlers:
 
 * Day Types handler
 * Calendar handler
@@ -56,3 +56,41 @@ The function gets as an argument the object that contains all callback handlers:
 * Bus Stops handler
 * List of cities handler
 * Schedules and routes handler
+
+None of these handlers is required so you are not obligated to implement any handler that is not interesting for you. All handlers has the same form: a function that gets one argument. Thus complete callback handlers object can have following form:
+
+```javascript
+var handler = {
+    onGetDayTypes: function (result) {
+        //here you can do something with the result object
+    },
+    
+    onGetCalendar: function (result) {
+        //here you can do something with the result object
+    },
+    
+    onGetLinesPerDay: function (result) {
+        //here you can do something with the result object
+    },
+    
+    onGetBusStopsGroups: function (result) {
+        //here you can do something with the result object
+    },
+    
+    onGetBusStops: function (result) {
+        //here you can do something with the result object
+    },
+    
+    onGetCities: function (result) {
+        //here you can do something with the result object
+    },
+    
+    onGetSchedules: function (result) {
+        //here you can do something with the result object
+    }
+};
+```
+
+### Getting day's types
+
+TO BE CONTINUED...
