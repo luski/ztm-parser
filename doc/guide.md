@@ -22,7 +22,7 @@ ZTMDataSourceParser.getDataSourcesURLs().then(function (urls) {
 The function returns a `Promise` object that resolves an array of URLs strings. The returned URLs has a following form:
 
 ```
- ftp:rozklady.ztm.waw.pl/RA150119.7z
+ ftp://rozklady.ztm.waw.pl/RA150119.7z
 ```
 
 * The name is meaningful. It always starts with 'RA' and after that prefix we have a date of the data source
