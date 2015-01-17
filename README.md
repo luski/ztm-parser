@@ -8,4 +8,4 @@ PROJECT IS IN EARLY ALPHA STAGE. It is not tested yet so don't trust the results
 documentation
 ------------
 
-The documentation is not finished yet. You can find it [here](doc/docs/docco.html).
+The documentation is not finished yet. You can find it [here](doc/guide.md).
