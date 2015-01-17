@@ -1,7 +1,7 @@
 {
-  "name": "ztm-parser.js",
+  "name": "ztm-parser",
   "version": "1.0.0",
-  "description": "ztm-parser.js =============",
+  "description": "Parser of data source containing schedules of Warsaw ZTM transit company",
   "main": "src/ztm-parser.js",
   "directories": {
     "test": "test"
@@ -23,7 +23,7 @@
     "type": "git",
     "url": "https://github.com/luski/ztm-parser.js.git"
   },
-  "author": "",
+  "author": "Lukasz Godlewski <l.godlewski@live.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/luski/ztm-parser.js/issues"
