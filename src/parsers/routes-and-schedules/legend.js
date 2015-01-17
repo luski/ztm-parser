@@ -2,6 +2,8 @@
 
 'use strict';
 
+var __test = [];
+
 var str = require('../../utils/string.js');
 
 /**
@@ -30,7 +32,7 @@ function createLegendParser() {
                 return text.trim();
             }),
             beginDateText = filterLegend([inputLines.shift()], 'D')[0],
-            commentTexts = filterLegend(inputLines, 'K'),
+            commentTexts = splitComments(filterLegend(inputLines, 'K')),
             legendTexts = filterLegend(inputLines, 'S');
 
         return {
@@ -87,6 +89,41 @@ function createLegendParser() {
             return addText(dst, text);
         });
         return result.length ? result : undefined;
+    }
+
+    /**
+     * Comments sections in data source are pretty messed. This function tries to group comments properly.
+     */
+    function splitComments(comments) {
+        var i, current = '', result = [];
+
+        for (i = 0; i < comments.length; i++) {
+            if (comments[i].length > 0) {
+                current += comments[i] + '\n';
+            } else if (current.length > 1 && current.charAt(current.length - 2) !== ':') {
+                addComment(current, result);
+                current = '';
+            }
+        }
+        addComment(current, result);
+
+        return result;
+    }
+
+    function addComment(commentText, dst) {
+        commentText = str.removeDelimiterAtEnd(commentText, '\n');
+        commentText = str.removeDelimiterAtEnd(commentText, '.');
+        commentText = commentText.trim();
+        if (!commentText.length) {
+            return;
+        }
+        var idx = commentText.indexOf('TRASA CZASOWO ZMIENIONA');
+        if (idx > 0) {
+            addComment(commentText.substring(0, idx), dst);
+            addComment(commentText.substring(idx), dst);
+        } else {
+            dst.push(commentText);
+        }
     }
 }
 
