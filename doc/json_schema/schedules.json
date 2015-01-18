@@ -19,7 +19,7 @@
       }
     },
     "texts": {
-      "description": "Container for all texts that exist in legends of scheules",
+      "description": "Container for all texts that exist in legends of schedules",
       "title": "Texts",
       "type": "object",
       "properties": {
@@ -48,7 +48,7 @@
       "items": {
         "type": "object",
         "properties": {
-          "code": {
+          "id": {
             "type": "string"
           },
           "routes": {
@@ -94,12 +94,64 @@
                         "type": "number"
                       },
                       "schedulesByDays": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "dayType": {
+                              "type": "string"
+                            },
+                            "departuresPerHour": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "description": "Information of all departures in the specified hour",
+                                "properties": {
+                                  "hour": {
+                                    "type": "number",
+                                    "description": "Hour of departure"
+                                  },
+                                  "departures": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "description": "Information about the departure in specified hour and minute",
+                                      "properties": {
+                                        "lowFloor": {
+                                          "type": "number",
+                                          "description": "Indicates if the vehicle has a low floor or not"
+                                        },
+                                        "symbols": {
+                                          "type": "array",
+                                          "description": "List of additional symbols for this departure. Symbol is represented by a number that is an index of element in SchedulesAndRoutes->texts->legendTexts array",
+                                          "items": {
+                                            "type": "number"
+                                          }
+                                        },
+                                        "minute": {
+                                          "type": "number",
+                                          "description": "Minute of departure time"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "street": {
+                        "type": "number"
                       }
                     }
                   }
                 }
               }
             }
+          },
+          "type": {
+            "type": "number"
           }
         }
       }

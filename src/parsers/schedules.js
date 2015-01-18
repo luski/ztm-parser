@@ -31,7 +31,7 @@ function createSchedulesParser() {
                 commentTexts: [],
                 legendTexts: []
             },
-            schedule: {}
+            schedule: []
         };
 
     return {
@@ -99,10 +99,11 @@ function createSchedulesParser() {
             result.lineTypeNames.push(lineTypeName);
         }
 
-        result.schedule[lineId] = {
+        result.schedule.push({
+            id: lineId,
             type: lineTypeId,
             routes: routesCodes.shift().map(buildRoute)
-        };
+        });
     }
 
     function buildRoute(routeCode) {
