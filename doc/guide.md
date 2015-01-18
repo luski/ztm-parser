@@ -49,7 +49,7 @@ ZTMDataSourceParser.parseZTMDataSource(handler);
 
 The function gets as an argument the object that contains following callback handlers:
 
-* Day Types handler
+* Types of Days handler
 * Calendar handler
 * Lines per Day handler
 * Groups of bus stops handler
@@ -91,6 +91,6 @@ var handler = {
 };
 ```
 
-### Getting day's types
+### Getting types of days
 
 TO BE CONTINUED...
