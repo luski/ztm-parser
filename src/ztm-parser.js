@@ -29,12 +29,17 @@ function getDataSourcesURLs() {
  */
 function parseZTMDataSource(url, handlers) {
     var schedulesParser = createSchedulesParser(),
-        busStops = {};
+        busStops = {},
+        dayTypes = {};
 
     return downloader.download(url).then(function (dbPath) {
         return reader.readDatabaseFile(dbPath, function (moduleName, moduleContent) {
+            if (moduleName === 'TY') {
+                dayTypes = parseDaysTypes(moduleContent);
+                schedulesParser.setDayTypes(dayTypes);
+            }
             if (moduleName === 'TY' && typeof handlers.onGetDayTypes === 'function') {
-                handlers.onGetDayTypes(parseDaysTypes(moduleContent));
+                handlers.onGetDayTypes(dayTypes);
             }
             if (moduleName === 'KA' && typeof handlers.onGetCalendar === 'function') {
                 handlers.onGetCalendar(parseCalendar(moduleContent));
@@ -53,7 +58,7 @@ function parseZTMDataSource(url, handlers) {
             }
             if (moduleName === 'LL') {
                 schedulesParser.parseTransportLines(moduleContent);
-                
+
                 if (typeof handlers.onGetBusStops === 'function') {
                     handlers.onGetBusStops(busStops);
                 }

@@ -11,15 +11,16 @@ var str = require('../utils/string.js'),
 
 /**
  *
- * @returns {{parseRoute: parseRoute, parseLegend: parseLegend, parseSchedule: parseSchedule, parseSchedulesForDayTypes: parseSchedulesForDayTypes, parseTransportLines: parseTransportLines, parseRoutesDescriptors: parseRoutesDescriptors, result: {lineTypeNames: Array, streets: Array, texts: {beginDateTexts: Array, commentTexts: Array, legendTexts: Array}, schedule: {}}}}
+ * @returns {{parseRoute: parseRoute, parseLegend: parseLegend, parseSchedule: parseSchedule, parseSchedulesForDayTypes: parseSchedulesForDayTypes, parseTransportLines: parseTransportLines, parseRoutesDescriptors: parseRoutesDescriptors, setDayTypes: setDayTypes, result: {lineTypeNames: Array, streets: Array, texts: {beginDateTexts: Array, commentTexts: Array, legendTexts: Array}, schedule: Array}}}
  */
 function createSchedulesParser() {
     var routesParser = createRoutesParser(),
         legendParser = createLegendParser(),
 
+        dayTypesMap = {},
         dayTypes = [],
         routes = [],
-        schedules = [],
+        departuresPerHour = [],
         legends = [],
         routesCodes = [],
 
@@ -42,6 +43,8 @@ function createSchedulesParser() {
         parseTransportLines: parseTransportLines,
         parseRoutesDescriptors: parseRoutesDescriptors,
 
+        setDayTypes: setDayTypes,
+
         result: result
     };
 
@@ -56,7 +59,7 @@ function createSchedulesParser() {
     }
 
     function parseSchedule(input) {
-        schedules.push(doParseSchedule(input));
+        departuresPerHour.push(doParseSchedule(input));
     }
 
     function parseSchedulesForDayTypes(input) {
@@ -67,7 +70,7 @@ function createSchedulesParser() {
         input = input.trim();
         return {
             noCourse: input.indexOf(NO_COURSE_KEY) !== -1,
-            dayType: input.substring(0, 2)
+            dayType: dayTypesMap[input.substring(0, 2)]
         };
     }
 
@@ -124,10 +127,17 @@ function createSchedulesParser() {
 
     function buildBusStopSchedule(dayType) {
         if (!dayType.noCourse) {
-            dayType.schedule = schedules.shift();
+            dayType.departuresPerHour = departuresPerHour.shift();
             delete dayType.noCourse;
         }
         return dayType;
+    }
+
+    function setDayTypes(types) {
+        var i;
+        for (i = 0; i < types.length; i++) {
+            dayTypesMap[types[i].code] = i;
+        }
     }
 }
 

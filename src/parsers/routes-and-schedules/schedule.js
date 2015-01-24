@@ -13,7 +13,7 @@ function parseHourSchedule(input) {
 
     return {
         hour: parseInt(fields[2]),
-        schedule: fields.slice(3).map(parseMinute)
+        departures: fields.slice(3).map(parseMinute)
     };
 }
 

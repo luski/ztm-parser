@@ -99,7 +99,7 @@
                           "type": "object",
                           "properties": {
                             "dayType": {
-                              "type": "string"
+                              "type": "number"
                             },
                             "departuresPerHour": {
                               "type": "array",
