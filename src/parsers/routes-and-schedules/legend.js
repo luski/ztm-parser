@@ -33,7 +33,7 @@ function createLegendParser() {
             }),
             beginDateText = filterLegend([inputLines.shift()], 'D')[0],
             commentTexts = splitComments(filterLegend(inputLines, 'K')),
-            legendTexts = filterLegend(inputLines, 'S');
+            legendTexts = splitLegends(filterLegend(inputLines, 'S'));
 
         return {
             header: addText(allBeginDateTexts, beginDateText),
@@ -124,6 +124,43 @@ function createLegendParser() {
         } else {
             dst.push(commentText);
         }
+    }
+
+    function splitLegends(legends) {
+        return legends.map(function (legend) {
+            return legend.split(';').
+                map(function (text) {
+                    return text.trim();
+                }).filter(function (text) {
+                    return text.length > 0;
+                });
+        }).reduce(function (texts1, texts2) {
+            return texts1.concat(texts2);
+        }, []).map(function (text) {
+            var transformations = [[/\(?(?:kurs )?(?:nie kursuje|odwołany)(?: w dniu)? (?:24\.12|24 grudnia)(?: \(Wigilia\))?\)?$/,
+                'nie kursuje 24.12 (Wigilia)'],
+                [/\(?(?:nie kursuje|odwołany)(?: w dniach)? 24-26\.12, 1\.01(?:(?:,| oraz) w Wielkanoc| oraz w (?:Święta Wielkanocne|ŚWIĘTA WIELKANOCNE))?\)?$/,
+                    'nie kursuje w dniach 24-26.12, 1.01 oraz w Święta Wielkanocne'],
+                [/\(?(?:nie kursuje|odwołany)(?: w dniach)? 25-26\.12, 1\.01(?:(?:,| oraz) w Wielkanoc| oraz w (?:Święta Wielkanocne|ŚWIĘTA WIELKANOCNE))?\)?$/,
+                    'nie kursuje w dniach 25-26.12, 1.01 oraz w Święta Wielkanocne']], i, match;
+
+            for (i = 0; i < transformations.length; i++) {
+                if (match = transformations[i][0].exec(text)) {
+                    return [text.substring(0, text.indexOf(match[0])).trim(), transformations[i][1]];
+                }
+            }
+            return [text];
+        }).reduce(function (texts1, texts2) {
+            return texts1.concat(texts2);
+        }, []).map(function (text) {
+            var match = /^. -/.exec(text);
+            if (match) {
+                return text.substring(3).trim();
+            }
+            return text.trim();
+        }).filter(function (text) {
+            return text.length > 0;
+        });
     }
 }
 
